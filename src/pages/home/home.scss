@@ -1,3 +1,40 @@
 page-home {
+  //.grocery-list {
+  //  height: 85%;
+  //}
 
+  .grocery-item {
+    display: inline-block;
+  }
+
+  .input-field {
+    height: 15%;
+    position: static;
+  }
+  .item-input {
+    //width: 90%;
+    //display: inline-block;
+    //position: static;
+  }
+  .add-icon {
+    //display: inline-block;
+    font-size: 30px;
+    z-index: 3;
+  }
+
+  .remove-icon {
+    display: inline-block;
+    z-index: 3;
+  }
+
+  //.item-form {
+  //  width: 95%;
+  //  z-index: 2;
+  //  position: absolute;
+  //}
+
+  .done-button {
+    //margin-right: 3%;
+    //margin-left: 3%;
+  }
 }

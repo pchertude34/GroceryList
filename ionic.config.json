@@ -2,5 +2,7 @@
   "name": "GroceryList",
   "app_id": "70c80110",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
