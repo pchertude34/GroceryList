@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FirebaseDataProvider } from '../../providers/firebase-data/firebase-data';
 import { ToastController } from 'ionic-angular';
 
@@ -13,26 +13,26 @@ const ADD_FAILED_TEXT = 'Failed to add ';
 })
 
 export class HomePage {
+  @ViewChild('itemInput') itemInput;
 
   private newItem: string = '';
+  private oldItem: string = '';
   private deleteMode: boolean = false;
+  private editMode: boolean = false;
 
   constructor(private firebaseData: FirebaseDataProvider,
               private toastCtrl: ToastController) {
-    console.log(this.firebaseData.groceryList);
+    console.log(JSON.stringify(this.firebaseData.groceryList));
   }
 
-  saveItem(item: any) {
-    this.firebaseData.saveItem(item);
-  }
-
+  // remove an item from the firebase DB by key.
   removeItem(item: string) {
     let toastText = '';
 
     try {
       this.firebaseData.removeItem(item);
-      toastText = item + REMOVE_TEXT;
-      this.presentToast(toastText);
+      // toastText = item + REMOVE_TEXT;
+      // this.presentToast(toastText);
 
     } catch (e) {
       toastText = REMOVE_FAILED_TEXT + item;
@@ -40,18 +40,28 @@ export class HomePage {
     }
   }
 
+  // update the checked value of an item to firebase
   updateItemChecked(item, value) {
     this.firebaseData.updateDB(item, value);
   }
 
+  // add an item to firebase. Default value to false
   addItem(item) {
     let toastText = '';
     this.newItem = '';
 
     try {
+
+      // toastText = item + ADD_TEXT;
+
+      if (this.editMode) {
+        this.removeItem(this.oldItem);
+        this.editMode = false;
+      }
+
       this.firebaseData.updateDB(item, false);
-      toastText = item + ADD_TEXT;
-      this.presentToast(toastText);
+
+      // this.presentToast(toastText);
 
     } catch (e) {
       toastText = ADD_FAILED_TEXT + item;
@@ -59,10 +69,20 @@ export class HomePage {
     }
   }
 
+  editItem(item) {
+    console.log("Edit item not ready yet: " + item);
+    this.itemInput.setFocus();
+    this.editMode = true;
+    this.newItem = item;
+    this.oldItem = item;
+  }
+
+  // create a list of key/values for ngFor
   keys(): Array<string> {
     return Object.keys(this.firebaseData.groceryList);
   }
 
+  // toast to show actions on screen
   presentToast(message) {
     const toast = this.toastCtrl.create({
       message: message,

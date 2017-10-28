@@ -8,7 +8,7 @@ import firebase from 'firebase';
   and Angular DI.
 */
 
-const GROCERY_PATH = '/groceries/';
+const GROCERY_PATH = '/list/';
 
 @Injectable()
 export class FirebaseDataProvider {
