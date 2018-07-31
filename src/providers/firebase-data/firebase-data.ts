@@ -9,6 +9,7 @@ import firebase from 'firebase';
 */
 
 const GROCERY_PATH = '/list/';
+const UPDATE_CHECKED_PATH = '/checked/';
 
 @Injectable()
 export class FirebaseDataProvider {
@@ -31,15 +32,21 @@ export class FirebaseDataProvider {
     })
   }
 
-  saveItem(item: any) {
+  addItem(item: any) {
     console.log("save item not complete");
     console.log("Item: " + JSON.stringify(item));
+    this.groceryListRef.push(item);
 
     // this.groceryListRef.(item);
   }
 
   updateDB(item, value) {
     this.groceryListRef.child(item).set(value);
+  }
+
+  updateItemChecked(item, value) {
+    let itemPath = item + UPDATE_CHECKED_PATH;
+    this.groceryListRef.child(itemPath).set(value);
   }
 
   removeItem(item) {

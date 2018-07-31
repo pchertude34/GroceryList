@@ -42,7 +42,9 @@ export class HomePage {
 
   // update the checked value of an item to firebase
   updateItemChecked(item, value) {
-    this.firebaseData.updateDB(item, value);
+    console.log(item);
+    console.log(value);
+    this.firebaseData.updateItemChecked(item, value);
   }
 
   // add an item to firebase. Default value to false
@@ -54,12 +56,14 @@ export class HomePage {
 
       // toastText = item + ADD_TEXT;
 
-      if (this.editMode) {
-        this.removeItem(this.oldItem);
-        this.editMode = false;
-      }
+      // if (this.editMode) {
+      //   this.removeItem(this.oldItem);
+      //   this.editMode = false;
+      // }
 
-      this.firebaseData.updateDB(item, false);
+      let itemToAdd = {name: item, checked: false};
+      this.firebaseData.addItem(itemToAdd);
+      // this.firebaseData.updateDB(item, false);
 
       // this.presentToast(toastText);
 
@@ -72,8 +76,12 @@ export class HomePage {
   editItem(item) {
     console.log("Edit item not ready yet: " + item);
     this.itemInput.setFocus();
-    this.editMode = true;
     this.newItem = item;
+    this.editMode = true;
+    if (!this.itemInput.isFocus()) {
+      this.editMode = false;
+      console.log('here');
+    }
     this.oldItem = item;
   }
 

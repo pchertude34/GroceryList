@@ -14,16 +14,16 @@
 
 <ion-content>
   <ion-list class="grocery-list" padding-right>
-    <ion-row *ngFor="let item of firebaseData.groceryList">
+    <ion-row *ngFor="let item of keys()">
       <ion-item>
-        <ion-label>{{item}}</ion-label>
+        <ion-label>{{firebaseData.groceryList[item].name}}</ion-label>
         <ion-checkbox
-                      [(ngModel)]="firebaseData.groceryList[item]"
-                      (ionChange)="updateItemChecked(item, firebaseData.groceryList[item])">
+                      [(ngModel)]="firebaseData.groceryList[item].checked"
+                      (ionChange)="updateItemChecked(item, firebaseData.groceryList[item].checked)">
         </ion-checkbox>
         <ion-icon *ngIf="!deleteMode" item-end name="create"
                   color="dark" class="list-icon"
-                  (click)="editItem(item)">
+                  (click)="editItem(firebaseData.groceryList[item].name)">
 
         </ion-icon>
         <ion-icon *ngIf="deleteMode" item-end name="remove-circle"
